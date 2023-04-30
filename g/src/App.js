@@ -13,10 +13,3 @@ function App() {
 }
 
 export default App;
-// Define some sample tasks for testing
-
-  // Render the TaskList component with the sample tasks
-  // ReactDOM.render(
-  //   <TaskList tasks={SAMPLE_TASKS} />,
-  //   document.getElementById("root")
-  // );
