@@ -1,0 +1,21 @@
+CREATE TABLE reviews (
+   review_id INT PRIMARY KEY,
+   product_id INT,
+   rating INT,
+   comment TEXT,
+   FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+
+
+SELECT
+   p.product_name,
+   p.category,
+   AVG(r.rating) AS avg_rating
+FROM
+   products p
+   JOIN reviews r ON p.product_id = r.product_id
+GROUP BY
+   p.product_id
+ORDER BY
+   avg_rating DESC
+LIMIT 5;

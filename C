@@ -1,0 +1,21 @@
+"courses" table:
+
+id (INT, primary key):
+name (VARCHAR):
+description (TEXT):
+
+
+"students" table:
+
+id (INT, primary key):
+name (VARCHAR): 
+email (VARCHAR):
+graduation_year (INT):
+
+
+"enrollments" table:
+
+id (INT, primary key): Unique identifier for each enrollment.
+course_id (INT, foreign key references courses(course_id)): References the course that the student is enrolled in.
+student_id (INT, foreign key references students(student_id)): References the student who is enrolled in the course.
+enrollment_date (DATE): Date on which the student was enrolled in the course.

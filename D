@@ -1,0 +1,112 @@
+Here's a database schema for an e-commerce website that sells products to customers:
+
+1. "customers" table:
+   - id (INT, primary key): Unique identifier for each customer.
+   - name (VARCHAR): Name of the customer.
+   - email (VARCHAR): Email address of the customer.
+   - password (VARCHAR): Encrypted password of the customer.
+   - shipping_address (VARCHAR): Shipping address of the customer.
+   - created_at (TIMESTAMP): 
+   - updated_at (TIMESTAMP): 
+
+2. "products" table:
+   - id (INT, primary key): Unique identifier for each product.
+   - name (VARCHAR): Name of the product.
+   - description (TEXT): Description of the product.
+   - price (DECIMAL): Price of the product.
+   - category (VARCHAR): Name of the category.
+
+3. "cart" table:
+   - id (INT, foreign key references shopping_carts(cart_id)): References the cart that the item belongs to.
+   - product_id (INT, foreign key references products(product_id)): References the product in the cart.
+   - quantity (INT): Quantity of the product in the cart.
+   - customer_id (INT, foreign key references customers(customer_id)): References the customer who owns the cart.
+
+4. "orders" table:
+   - order_id (INT, primary key): Unique identifier for each order.
+   - customer_id (INT, foreign key references customers(customer_id)): References the customer who placed the order.
+   - status (VARCHAR): Status of the order (e.g. "pending", "shipped", "delivered").
+   - total_cost (DECIMAL): Total cost of the order.
+   - created_at (TIMESTAMP): 
+   - updated_at (TIMESTAMP): 
+
+5. "order_items" table:
+   - order_id (INT, foreign key references orders(order_id)): References the order that the item belongs to.
+   - product_id (INT, foreign key references products(product_id)): References the product in the order.
+   - quantity (INT): Quantity of the product in the order.
+   - price (DECIMAL): Price of the product at the time the order was placed.
+
+6. "inventory" table:
+   - product_id (INT, foreign key references products(product_id)): References the product.
+   - quantity (INT): Quantity of the product in inventory.
+   - updated_at (TIMESTAMP): 
+
+7. "reviews" table:
+   - id (INT, primary key): Unique identifier for each review.
+   - product_id (INT, foreign key references products(product_id)): References the product being reviewed.
+   - customer_id (INT, foreign key references customers(customer_id)): References the customer who wrote the review.
+   - rating (INT): Rating of the product on a scale of 1-5.
+   - review_text (TEXT): Text of the review.
+   - created_at (TIMESTAMP): 
+   - updated_at (TIMESTAMP): 
+
+Here's the SQL code to create the tables:
+
+CREATE TABLE Customers (
+  id INTEGER PRIMARY KEY,
+  name VARCHAR NOT NULL,
+  email VARCHAR UNIQUE NOT NULL,
+  password VARCHAR NOT NULL,
+  shipping_address VARCHAR NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Products (
+  id INTEGER PRIMARY KEY,
+  name VARCHAR NOT NULL,
+  description TEXT NOT NULL,
+  price DECIMAL NOT NULL,
+  catagory VARCHAR NOT NULL
+);
+
+CREATE TABLE Cart (
+  id INTEGER PRIMARY KEY,
+  customer_id INTEGER NOT NULL REFERENCES Customers(customer_id),
+  product_id INTEGER REFERENCES Products(product_id),
+  quantity INTEGER NOT NULL
+);
+
+CREATE TABLE Orders (
+  order_id INTEGER PRIMARY KEY,
+  customer_id INTEGER NOT NULL REFERENCES Customers(customer_id),
+  status VARCHAR NOT NULL,
+  total_cost DECIMAL NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Order_Items (
+  order_id INTEGER REFERENCES Orders(order_id),
+  product_id INTEGER REFERENCES Products(product_id),
+  quantity INTEGER NOT,
+  price DECIMAL(10, 2)
+)
+
+CREATE TABLE inventory (
+  product_id INT PRIMARY KEY,
+  quantity INTEGER NOT,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE reviews (
+  id INT PRIMARY KEY,
+  customer_id INT,
+  product_id INT,
+  rating INT,
+  review_textt TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (customer_id) REFERENCES customers(id),
+  FOREIGN KEY (product_id) REFERENCES products(id)
+);
